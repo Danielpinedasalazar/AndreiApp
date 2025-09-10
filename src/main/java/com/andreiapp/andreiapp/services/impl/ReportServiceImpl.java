@@ -137,4 +137,26 @@ public class ReportServiceImpl implements ReportService {
                 .data(reportDTO)
                 .build();
     }
+
+    @Override
+    public Response<ReportDTO> updateReport(Long id, ReportDTO reportDTO) {
+
+        Report updateReportStatus = reportRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException("Reporte no encontrado"));
+
+        if(reportDTO.getStatus() != null){
+            updateReportStatus.setStatus(reportDTO.getStatus());
+        }
+
+        updateReportStatus.setUpdatedAt(LocalDateTime.now());
+
+        Report updated = reportRepo.save(updateReportStatus);
+        ReportDTO updatedReportDTO = modelMapper.map(updated, ReportDTO.class);
+
+        return Response.<ReportDTO>builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("Reporte actualizado con exito")
+                .data(updatedReportDTO)
+                .build();
+    }
 }

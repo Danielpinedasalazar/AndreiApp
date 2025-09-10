@@ -49,4 +49,10 @@ public class ReportController {
     public ResponseEntity<Response<ReportDTO>> getReportById(@PathVariable ("id") Long id) {
         return ResponseEntity.ok(reportService.getReportById(id));
     }
+
+    @PutMapping("/update-status/{id}")
+    @PreAuthorize("hasAuthority('SUPER_ADMIN')")
+    public ResponseEntity<Response<ReportDTO>> updateReport(@PathVariable ("id") Long id, @RequestBody ReportDTO reportDTO) {
+        return ResponseEntity.ok(reportService.updateReport(id, reportDTO));
+    }
 }

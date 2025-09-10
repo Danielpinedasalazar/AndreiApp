@@ -19,4 +19,6 @@ public interface ReportService {
     Response<List<ReportDTO>> getReportsByStatus(ReportStatus status);
 
     Response<ReportDTO> getReportById(Long id);
+
+    Response<ReportDTO> updateReport(Long id, ReportDTO reportDTO);
 }
