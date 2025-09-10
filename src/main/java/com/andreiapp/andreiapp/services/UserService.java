@@ -15,6 +15,8 @@ public interface UserService {
 
     Response<?> updateMyAccount(UserDTO userDTO);
 
+    Response<UserDTO> updateUserById(Long id,UserDTO userDTO);
+
     Response<List<UserDTO>> findAllUsers();
 
     Response<?> deleteUser(String email);

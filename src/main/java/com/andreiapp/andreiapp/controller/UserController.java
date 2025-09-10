@@ -27,6 +27,12 @@ public class UserController {
         return ResponseEntity.ok(userService.updateMyAccount(userDTO));
     }
 
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('SUPER_ADMIN')")
+    public ResponseEntity<Response<UserDTO>> updateUserById(@PathVariable ("id") Long id, @RequestBody UserDTO userDTO) {
+        return ResponseEntity.ok(userService.updateUserById(id, userDTO));
+    }
+
     @GetMapping("/find-all")
     @PreAuthorize("hasAuthority('SUPER_ADMIN')")
     public ResponseEntity<Response<List<UserDTO>>> findAllUsers() {

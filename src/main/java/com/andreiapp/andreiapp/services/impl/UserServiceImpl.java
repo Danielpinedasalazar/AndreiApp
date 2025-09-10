@@ -72,6 +72,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Response<UserDTO> updateUserById(Long id,UserDTO userDTO) {
+
+        User user = userRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
+
+        if (userDTO.getRole() != null) {
+            user.setRole(userDTO.getRole());
+        }
+
+        user.setUpdatedAt(LocalDateTime.now());
+
+        User updatedUser = userRepo.save(user);
+        UserDTO updatedUserDTO = modelMapper.map(updatedUser, UserDTO.class);
+
+        return Response.<UserDTO>builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("Usuario actualizado con exito")
+                .data(updatedUserDTO)
+                .build();
+    }
+
+    @Override
     public Response<List<UserDTO>> findAllUsers() {
 
         List<UserDTO> users = userRepo.findAll()
