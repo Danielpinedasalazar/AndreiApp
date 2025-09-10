@@ -26,7 +26,7 @@ public class ReportController {
     }
 
     @GetMapping("/all")
-    @PreAuthorize("hasAuthority('DAEMON')")
+    @PreAuthorize("hasAnyAuthority('DAEMON', 'SUPER_ADMIN')")
     public ResponseEntity<Response<?>>getAllReports() {
         return ResponseEntity.ok(reportService.getAllReports());
     }
