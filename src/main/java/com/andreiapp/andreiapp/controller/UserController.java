@@ -51,4 +51,12 @@ public class UserController {
         return ResponseEntity.ok(userService.findAllUsersByRole(role));
     }
 
+    @PostMapping("/create-daemon")
+    @PreAuthorize("hasAuthority('SUPER_ADMIN')")
+    public ResponseEntity<Response<?>> createUserWithRoleDaemon(@RequestBody UserDTO userDTO  ) {
+        return ResponseEntity.ok(userService.createUserWithRoleDaemon(userDTO));
+    }
+
+
+
 }

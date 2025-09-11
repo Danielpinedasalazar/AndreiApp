@@ -4,6 +4,7 @@ import com.andreiapp.andreiapp.dtos.Response;
 import com.andreiapp.andreiapp.dtos.UserDTO;
 import com.andreiapp.andreiapp.entities.User;
 import com.andreiapp.andreiapp.enums.Role;
+import com.andreiapp.andreiapp.exceptions.BadRequestException;
 import com.andreiapp.andreiapp.exceptions.NotFoundException;
 import com.andreiapp.andreiapp.repo.UserRepo;
 import com.andreiapp.andreiapp.services.UserService;
@@ -130,6 +131,40 @@ public class UserServiceImpl implements UserService {
                 .statusCode(HttpStatus.OK.value())
                 .message(users.isEmpty() ? "No hay usuarios con el rol especificado" : "Usuarios encontrados")
                 .data(users)
+                .build();
+    }
+
+    @Override
+    public Response<?> createUserWithRoleDaemon(UserDTO userDTO) {
+
+        if (userDTO.getName() == null || userDTO.getName().isBlank()) {
+            throw new BadRequestException("El nombre del Daemon es requerido");
+        }
+        if (userDTO.getEmail() == null || userDTO.getEmail().isBlank()) {
+            throw new BadRequestException("El email del Daemon es requerido");
+        }
+        if (userDTO.getPassword() == null || userDTO.getPassword().isBlank()) {
+            throw new BadRequestException("La contraseña del Daemon es requerida");
+        }
+
+        if (userRepo.existsByEmail(userDTO.getEmail())) {
+            throw new BadRequestException("El email ya está registrado");
+        }
+
+        User userToSave = new User();
+        userToSave.setName(userDTO.getName());
+        userToSave.setEmail(userDTO.getEmail());
+        userToSave.setPassword(userDTO.getPassword());
+        userToSave.setActive(true);
+        userToSave.setRole(Role.DAEMON);
+        userToSave.setCreatedAt(LocalDateTime.now());
+
+        User savedUser = userRepo.save(userToSave);
+
+        return Response.<UserDTO>builder()
+                .statusCode(HttpStatus.OK.value())
+                .message("Daemon creado con exito")
+                .data(modelMapper.map(savedUser, UserDTO.class))
                 .build();
     }
 }

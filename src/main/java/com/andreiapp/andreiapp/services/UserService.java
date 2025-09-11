@@ -22,4 +22,6 @@ public interface UserService {
     Response<?> deleteUser(String email);
 
     Response<List<UserDTO>> findAllUsersByRole(Role role);
+
+    Response<?> createUserWithRoleDaemon(UserDTO userDTO);
 }
