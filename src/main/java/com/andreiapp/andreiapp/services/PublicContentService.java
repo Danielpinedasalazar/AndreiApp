@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PublicContentService {
 
-    Response<?> createIncentiveEvent(PublicContentDTO publicContentDTO);
+    Response<?> createPublicContent(PublicContentDTO publicContentDTO);
 
     Response<List<PublicContentDTO>> getApprovedPublicContent();
 

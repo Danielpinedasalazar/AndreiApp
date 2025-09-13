@@ -19,8 +19,8 @@ public class PublicContentController {
     private final PublicContentService publicContentService;
 
     @PostMapping("/create")
-    public ResponseEntity<Response<?>> createIncentiveEvent(@RequestBody PublicContentDTO publicContentDTO) {
-        return ResponseEntity.ok(publicContentService.createIncentiveEvent(publicContentDTO));
+    public ResponseEntity<Response<?>> createPublicContent(@RequestBody PublicContentDTO publicContentDTO) {
+        return ResponseEntity.ok(publicContentService.createPublicContent(publicContentDTO));
     }
 
     @GetMapping("/all")

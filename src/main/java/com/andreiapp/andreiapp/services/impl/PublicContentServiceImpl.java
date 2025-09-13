@@ -30,7 +30,7 @@ public class PublicContentServiceImpl implements PublicContentService {
 
 
     @Override
-    public Response<?> createIncentiveEvent(PublicContentDTO publicContentDTO) {
+    public Response<?> createPublicContent(PublicContentDTO publicContentDTO) {
 
         if(publicContentDTO.getTitle() == null || publicContentDTO.getTitle().isEmpty()) {
             throw new BadRequestException("El titulo es obligatorio");
@@ -46,6 +46,8 @@ public class PublicContentServiceImpl implements PublicContentService {
         publicContent.setTitle(publicContentDTO.getTitle().trim());
         publicContent.setBodyMd(publicContentDTO.getBodyMd().trim());
         publicContent.setType(publicContentDTO.getType());
+        publicContent.setImageUrl(publicContentDTO.getImageUrl().trim());
+        publicContent.setAltText(publicContentDTO.getAltText().trim());
         publicContent.setApproved(false);
         publicContent.setSubmittedBy(user);
         publicContent.setCreatedAt(LocalDateTime.now());
